@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Update Match Results</h1>
+    <form method="POST">
+        {% for question in questions %}
+            <div>
+                <p>{{ question.text }}</p>
+                <input type="radio" name="question_{{ question.id }}" value="over" required> Over
+                <input type="radio" name="question_{{ question.id }}" value="under" required> Under
+            </div>
+        {% endfor %}
+        <input type="submit" value="Update Results">
+    </form>
+{% endblock %}

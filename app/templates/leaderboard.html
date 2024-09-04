@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard - Premier League Predictor{% endblock %}
+
+{% block content %}
+    <h1>Leaderboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.score }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Your Predictions</h2>
+    {% if predictions %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Your Prediction</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for prediction in predictions %}
+                    <tr>
+                        <td>{{ prediction.question }}</td>
+                        <td>{{ prediction.answer }}</td>
+                        <td>
+                            {% if prediction.is_correct is not none %}
+                                {% if prediction.is_correct %}
+                                    <span class="correct">Correct</span>
+                                {% else %}
+                                    <span class="incorrect">Incorrect</span>
+                                {% endif %}
+                            {% else %}
+                                Pending
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>You haven't made any predictions for the current week yet.</p>
+    {% endif %}
+{% endblock %}

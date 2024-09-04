@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome to Premier League Predictor</h1>
+    {% if current_user.is_authenticated %}
+        <p>Hello, {{ current_user.username }}!</p>
+        <p>Your current score is: {{ current_user.score }}</p>
+        <a href="{{ url_for('main.predictions') }}">Make Predictions</a>
+    {% else %}
+        <p>Please <a href="{{ url_for('auth.login') }}">log in</a> or <a href="{{ url_for('auth.register') }}">register</a> to start making predictions.</p>
+    {% endif %}
+{% endblock %}

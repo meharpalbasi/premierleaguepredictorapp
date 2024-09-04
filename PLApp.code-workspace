@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "PLApp",
+			"path": "."
+		},
+		{
+			"name": "migrations",
+			"path": "../../.Trash/migrations"
+		}
+	],
+	"settings": {}
+}

@@ -1,0 +1,111 @@
+2024-09-03 17:19:25,564 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:19:35,975 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:19:54,528 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:20:19,556 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:20:22,936 ERROR: Exception on / [GET] [in /Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask/app.py:838]
+Traceback (most recent call last):
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.DatabaseError: database disk image is malformed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/app/routes.py", line 27, in index
+    return render_template('index.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask/templating.py", line 127, in _render
+    app.update_template_context(context)
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask/app.py", line 493, in update_template_context
+    context.update(self.ensure_sync(func)())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask_login/utils.py", line 405, in _user_context_processor
+    return dict(current_user=_get_user())
+                             ^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask_login/utils.py", line 370, in _get_user
+    current_app.login_manager._load_user()
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/flask_login/login_manager.py", line 364, in _load_user
+    user = self._user_callback(user_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/app/__init__.py", line 52, in load_user
+    return User.query.get(int(user_id))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in get
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/util/deprecations.py", line 386, in warned
+    return fn(*args, **kwargs)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 1127, in get
+    return self._get_impl(ident, loading.load_on_pk_identity)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/orm/query.py", line 1136, in _get_impl
+    return self.session._get_impl(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 3873, in _get_impl
+    return db_load_fn(
+           ^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/orm/loading.py", line 694, in load_on_pk_identity
+    session.execute(
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2362, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 2247, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/orm/context.py", line 293, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1418, in execute
+    return meth(
+           ^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 515, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1640, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1846, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1986, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2355, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1967, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/meharpalbasi/Documents/PLApp/venv/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 941, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.DatabaseError: (sqlite3.DatabaseError) database disk image is malformed
+[SQL: SELECT user.id AS user_id, user.username AS user_username, user.email AS user_email, user.password_hash AS user_password_hash, user.score AS user_score 
+FROM user 
+WHERE user.id = ?]
+[parameters: (1,)]
+(Background on this error at: https://sqlalche.me/e/20/4xp6)
+2024-09-03 17:21:42,843 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:21:56,921 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:22:00,057 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:22:11,077 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:22:14,641 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:24:06,048 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:26:32,511 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:26:39,651 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:28:31,624 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-03 17:52:22,674 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-04 19:34:13,281 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
+2024-09-04 19:38:28,765 INFO: Premier League Predictor startup [in /Users/meharpalbasi/Documents/PLApp/app/__init__.py:63]
