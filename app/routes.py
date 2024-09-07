@@ -201,3 +201,43 @@ def update_user_scores():
 
 # Remove this line as it's causing the context issue:
 # update_user_scores()
+
+@main.route('/admin/update_results', methods=['GET', 'POST'])
+@login_required
+def admin_update_results():
+    if not current_user.is_admin:
+        flash('You do not have permission to access this page.')
+        return redirect(url_for('main.index'))
+
+    current_week = get_current_week()
+    questions = Question.query.filter_by(week=current_week).all()
+
+    if request.method == 'POST':
+        for question in questions:
+            result = request.form.get(f'question_{question.id}')
+            if result:
+                # Update the question's result
+                question.result = result
+        
+        db.session.commit()
+        update_prediction_results()
+        update_user_scores()
+        flash('Results have been updated successfully.')
+        return redirect(url_for('main.index'))
+
+    return render_template('admin_update_results.html', questions=questions)
+
+# Update these existing functions
+def update_prediction_results():
+    predictions = Prediction.query.filter_by(is_correct=None).all()
+    for prediction in predictions:
+        if prediction.question.result:
+            prediction.is_correct = prediction.answer == prediction.question.result
+    db.session.commit()
+
+def update_user_scores():
+    users = User.query.all()
+    for user in users:
+        correct_predictions = Prediction.query.filter_by(user_id=user.id, is_correct=True).count()
+        user.score = correct_predictions
+    db.session.commit()

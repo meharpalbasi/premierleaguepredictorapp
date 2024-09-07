@@ -21,6 +21,9 @@
                     <li><a href="{{ url_for('main.leaderboard') }}"><i class="fas fa-trophy"></i> Leaderboard</a></li>
                     <li><a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 {% endif %}
+                {% if current_user.is_authenticated and current_user.is_admin %}
+                    <li><a href="{{ url_for('main.admin_update_results') }}"><i class="fas fa-cog"></i> Admin</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

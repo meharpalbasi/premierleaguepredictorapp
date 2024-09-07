@@ -11,6 +11,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))  # Updated to store the hashed password
     score = db.Column(db.Integer, default=0)
     predictions = db.relationship('Prediction', backref='user', lazy='dynamic')
+    is_admin = db.Column(db.Boolean, default=False)
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)  # Hashes the password
@@ -61,6 +62,7 @@ class Question(db.Model):
     text = db.Column(db.String(255), nullable=False)
     week = db.Column(db.Integer, nullable=False)
     predictions = db.relationship('Prediction', backref='question', lazy=True)
+    result = db.Column(db.String(10))
 
 class Match(db.Model):
     id = db.Column(db.Integer, primary_key=True)
