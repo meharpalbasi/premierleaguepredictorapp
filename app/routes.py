@@ -6,7 +6,7 @@ from wtforms import RadioField
 from wtforms.validators import DataRequired
 from . import db
 from .models import User, Prediction, Match, Question
-from .forms import RegistrationForm, LoginForm, PredictionForm
+from .forms import RegistrationForm, LoginForm, PredictionForm, QuestionForm  # We'll create this form next
 from sqlalchemy.exc import IntegrityError
 
 main = Blueprint('main', __name__)
@@ -209,8 +209,15 @@ def admin_update_results():
         flash('You do not have permission to access this page.')
         return redirect(url_for('main.index'))
 
-    current_week = get_current_week()
-    questions = Question.query.filter_by(week=current_week).all()
+    # Get all available weeks
+    available_weeks = db.session.query(Question.week.distinct()).order_by(Question.week).all()
+    available_weeks = [week[0] for week in available_weeks]
+
+    # Get the selected week from the query parameter, default to the latest week
+    selected_week = request.args.get('week', type=int, default=max(available_weeks))
+
+    # Get questions for the selected week
+    questions = Question.query.filter_by(week=selected_week).order_by(Question.id).all()
 
     if request.method == 'POST':
         for question in questions:
@@ -223,9 +230,9 @@ def admin_update_results():
         update_prediction_results()
         update_user_scores()
         flash('Results have been updated successfully.')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.admin_update_results', week=selected_week))
 
-    return render_template('admin_update_results.html', questions=questions)
+    return render_template('admin_update_results.html', questions=questions, selected_week=selected_week, available_weeks=available_weeks)
 
 # Update these existing functions
 def update_prediction_results():
@@ -241,3 +248,66 @@ def update_user_scores():
         correct_predictions = Prediction.query.filter_by(user_id=user.id, is_correct=True).count()
         user.score = correct_predictions
     db.session.commit()
+
+@main.route('/admin/add_question', methods=['GET', 'POST'])
+@login_required
+def admin_add_question():
+    if not current_user.is_admin:
+        flash('You do not have permission to access this page.')
+        return redirect(url_for('main.index'))
+
+    form = QuestionForm()
+    if form.validate_on_submit():
+        new_question = Question(text=form.text.data, week=form.week.data)
+        db.session.add(new_question)
+        db.session.commit()
+        flash('New question added successfully.')
+        return redirect(url_for('main.admin_add_question'))
+
+    return render_template('admin_add_question.html', form=form)
+
+@main.route('/admin/manage_questions', methods=['GET', 'POST'])
+@login_required
+def admin_manage_questions():
+    if not current_user.is_admin:
+        flash('You do not have permission to access this page.')
+        return redirect(url_for('main.index'))
+
+    form = QuestionForm()
+    if form.validate_on_submit():
+        if form.question_id.data:
+            # Modify existing question
+            question = Question.query.get(form.question_id.data)
+            if question:
+                question.text = form.text.data
+                question.week = form.week.data
+                db.session.commit()
+                flash('Question updated successfully.')
+            else:
+                flash('Question not found.')
+        else:
+            # Add new question
+            new_question = Question(text=form.text.data, week=form.week.data)
+            db.session.add(new_question)
+            db.session.commit()
+            flash('New question added successfully.')
+        return redirect(url_for('main.admin_manage_questions'))
+
+    questions = Question.query.order_by(Question.week, Question.id).all()
+    return render_template('admin_manage_questions.html', form=form, questions=questions)
+
+@main.route('/admin/delete_question/<int:question_id>', methods=['POST'])
+@login_required
+def admin_delete_question(question_id):
+    if not current_user.is_admin:
+        flash('You do not have permission to perform this action.')
+        return redirect(url_for('main.index'))
+
+    question = Question.query.get(question_id)
+    if question:
+        db.session.delete(question)
+        db.session.commit()
+        flash('Question deleted successfully.')
+    else:
+        flash('Question not found.')
+    return redirect(url_for('main.admin_manage_questions'))

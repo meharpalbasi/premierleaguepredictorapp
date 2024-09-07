@@ -192,6 +192,18 @@ footer {
 
 /* Add these styles to your existing CSS file */
 
+select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.week-selector {
+    margin-bottom: 20px;
+}
+
 .correct {
     color: green;
     font-weight: bold;
@@ -234,4 +246,57 @@ footer {
 
 .predictions-table tr:hover {
     background-color: #f5f5f5;
+}
+
+.week-questions {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+.question {
+    margin-bottom: 1rem;
+}
+
+.question p {
+    margin-bottom: 0.5rem;
+}
+
+/* Add these styles to your existing CSS file */
+
+.manage-questions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.manage-questions-table th,
+.manage-questions-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.manage-questions-table th {
+    background-color: #f2f2f2;
+}
+
+.manage-questions-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.manage-questions-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons button,
+.action-buttons input[type="submit"] {
+    padding: 5px 10px;
+    cursor: pointer;
 }

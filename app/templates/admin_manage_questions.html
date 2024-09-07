@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Manage Questions</h1>
+    
+    <h2>Add/Edit Question</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.text.label }}
+            {{ form.text(size=50) }}
+        </div>
+        <div>
+            {{ form.week.label }}
+            {{ form.week() }}
+        </div>
+        <div>
+            {{ form.submit() }}
+        </div>
+    </form>
+
+    <h2>Existing Questions</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Week</th>
+                <th>Question</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.week }}</td>
+                    <td>{{ question.text }}</td>
+                    <td>
+                        <button onclick="editQuestion({{ question.id }}, '{{ question.text }}', {{ question.week }})">Edit</button>
+                        <form method="POST" action="{{ url_for('main.admin_delete_question', question_id=question.id) }}" style="display:inline;">
+                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this question?');">
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function editQuestion(id, text, week) {
+            document.getElementById('question_id').value = id;
+            document.getElementById('text').value = text;
+            document.getElementById('week').value = week;
+        }
+    </script>
+{% endblock %}

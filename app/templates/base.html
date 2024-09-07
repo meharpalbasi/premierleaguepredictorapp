@@ -22,7 +22,8 @@
                     <li><a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 {% endif %}
                 {% if current_user.is_authenticated and current_user.is_admin %}
-                    <li><a href="{{ url_for('main.admin_update_results') }}"><i class="fas fa-cog"></i> Admin</a></li>
+                    <li><a href="{{ url_for('main.admin_update_results') }}"><i class="fas fa-cog"></i> Update Results</a></li>
+                    <li><a href="{{ url_for('main.admin_manage_questions') }}"><i class="fas fa-question"></i> Manage Questions</a></li>
                 {% endif %}
             </ul>
         </nav>

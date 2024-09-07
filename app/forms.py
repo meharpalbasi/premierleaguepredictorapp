@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from .models import User
-from wtforms import RadioField
+from wtforms import RadioField, HiddenField
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -33,3 +33,9 @@ class PredictionForm(FlaskForm):
 class PredictionForm(FlaskForm):
     static_test_field = RadioField('Test Prediction', choices=[('over', 'Over'), ('under', 'Under')], validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class QuestionForm(FlaskForm):
+    question_id = HiddenField('Question ID')
+    text = StringField('Question Text', validators=[DataRequired()])
+    week = IntegerField('Week', validators=[DataRequired()])
+    submit = SubmitField('Save Question')

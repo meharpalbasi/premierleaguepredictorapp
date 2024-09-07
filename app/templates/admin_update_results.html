@@ -2,14 +2,31 @@
 
 {% block content %}
     <h1>Update Match Results</h1>
+    
+    <form method="GET" action="{{ url_for('main.admin_update_results') }}">
+        <label for="week">Select Week:</label>
+        <select name="week" id="week" onchange="this.form.submit()">
+            {% for week in available_weeks %}
+                <option value="{{ week }}" {% if week == selected_week %}selected{% endif %}>Week {{ week }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
     <form method="POST">
-        {% for question in questions %}
-            <div>
-                <p>{{ question.text }}</p>
-                <input type="radio" name="question_{{ question.id }}" value="over" required> Over
-                <input type="radio" name="question_{{ question.id }}" value="under" required> Under
-            </div>
-        {% endfor %}
-        <input type="submit" value="Update Results">
+        <h2>Week {{ selected_week }}</h2>
+        <div class="week-questions">
+            {% for question in questions %}
+                <div class="question">
+                    <p>{{ question.text }}</p>
+                    <input type="radio" name="question_{{ question.id }}" value="over" {% if question.result == 'over' %}checked{% endif %} required> Over
+                    <input type="radio" name="question_{{ question.id }}" value="under" {% if question.result == 'under' %}checked{% endif %} required> Under
+                </div>
+            {% endfor %}
+        </div>
+        {% if questions %}
+            <input type="submit" value="Update Results">
+        {% else %}
+            <p>No questions found for this week.</p>
+        {% endif %}
     </form>
 {% endblock %}
